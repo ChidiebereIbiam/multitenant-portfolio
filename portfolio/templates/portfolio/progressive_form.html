@@ -1,0 +1,58 @@
+<!-- progressive_form.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Progressive Form</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link {% if step == 'profile' %}active{% endif %}" id="profile-tab" role="tab">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if step == 'service' %}active{% endif %}" id="service-tab" role="tab">Service</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if step == 'education' %}active{% endif %}" id="education-tab" role="tab">Education</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if step == 'work_experience' %}active{% endif %}" id="work_experience-tab" role="tab">Work Experience</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if step == 'project' %}active{% endif %}" id="project-tab" role="tab">Project</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if step == 'contact' %}active{% endif %}" id="contact-tab" role="tab">Contact</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if step == 'skills' %}active{% endif %}" id="skills-tab" role="tab">Skills</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="{{ step }}" role="tabpanel">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% include 'portfolio/form_snippet.html' with form=form %}
+                    <input type="hidden" name="next_step" value="{{ step }}" />
+                    <button type="submit" name="save_proceed" class="btn btn-primary">Save and Proceed</button>
+                    <button type="submit" name="save_add_another" class="btn btn-secondary">Save and Add Another</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Ensure tabs are not clickable
+        document.querySelectorAll('.nav-link').forEach(function(tab) {
+            tab.addEventListener('click', function(event) {
+                event.preventDefault();
+            });
+        });
+    </script>
+    </body>
+</html>

@@ -151,6 +151,14 @@ TENANT_MODEL = "tenant.Client"
 
 TENANT_DOMAIN_MODEL = "tenant.Domain" 
 
+
+
 LOGIN_URL = '/authentication/login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = '/authentication/login'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# DEFAULT_FILE_STORAGE = "tenant_storage.CustomTenantFileSystemStorage"
+# MULTITENANT_RELATIVE_MEDIA_ROOT = ""

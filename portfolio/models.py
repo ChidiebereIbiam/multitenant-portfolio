@@ -20,7 +20,6 @@ class Profile(models.Model):
     twitter = models.URLField(max_length=200, null=True, blank=True)
     google = models.URLField(max_length=200, null=True, blank=True)
     linkedin = models.URLField(max_length=200, null=True, blank=True)
-    user = models.OneToOneField(User,  on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"

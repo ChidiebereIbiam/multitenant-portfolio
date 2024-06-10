@@ -111,7 +111,7 @@
                                     <div class="typed-strings">
                                         <p>I'm {{profile.first_name}} {{profile.last_name}}</p>
                                         <p>I'm a {{profile.role}}.</p>
-                                        <p>I'm a Freelancer.</p>
+                                        {% comment %} <p>I'm a Freelancer.</p> {% endcomment %}
 
                                     </div>
                                     <p class="text-7 fw-500 text-white mb-2 mb-md-3">Welcome</p>
@@ -162,7 +162,7 @@
                                     <li class="border-0"><span class="fw-600 me-2">From:</span>{{profile.location}}</li>
                                 </ul>
                                 {% if profile.cv %}
-                                <a href="" class="btn btn-primary rounded-pill">Download CV</a>
+                                <a href="{{profile.cv.url}}" class="btn btn-primary rounded-pill">Download CV</a>
                             </div>
                             {% endif %}
                         </div>
@@ -357,9 +357,9 @@
                             <div class="col-sm-6 col-lg-4 brand">
                                 <div class="portfolio-box rounded">
                                     <div class="portfolio-img rounded"> <img class="img-fluid d-block"
-                                            src="" alt="">
+                                            src="{{project.image1.url}}" alt="">
                                         <div class="portfolio-overlay"> <a class="popup-ajax stretched-link"
-                                                href=""></a>
+                                                href="{% url 'project-detail' project.id%}"></a>
                                             <div class="portfolio-overlay-details">
                                                 <h5 class="text-white fw-400">{{project.title}}</h5>
                                                 
