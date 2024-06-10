@@ -33,7 +33,7 @@
                 <li><a href="#" class="nav-link px-2 link-dark">FAQs</a></li>
                 <li><a href="#" class="nav-link px-2 link-dark">About</a></li>
                 {% else %}
-                <li><a href="#" class="nav-link px-2 link-dark">Create Tenant</a></li>
+                <li><a href="{% url "create_tenant" %}" class="nav-link px-2 link-dark">Create Tenant</a></li>
                 {% endif %}
 
             </ul>

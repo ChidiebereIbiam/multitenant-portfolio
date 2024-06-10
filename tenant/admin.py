@@ -4,9 +4,10 @@ from .models import Client, Domain
 
 # Register your models here.
 
-class DomainInline(admin.TabularInline):
-    model = Domain
+admin.site.register(Domain)
+# class DomainInline(admin.TabularInline):
+#     model = Domain
 
 @admin.register(Client)
 class ClientAdmin(TenantAdminMixin, admin.ModelAdmin):
-        list_display = ('name', 'address', 'paid_until')
+        list_display = ('user',)
