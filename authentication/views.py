@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render,get_object_or_404
 from .forms import SignUpForm, ClientForm
 from django.contrib.auth.models import User
-from tenant.models import Domain
+from tenant.models import Domain, Client
 
 
 
@@ -43,3 +43,7 @@ def create_tenant(request):
     context = {'form':form}
     return render(request, 'registration/create_tenant.html', context)
 
+def list_tenant(request):
+    tenants = Client.objects.filter(user=request.user)
+    context = {'tenants':tenants}
+    return render(request, 'registration/list_tenant.html', context)

@@ -1,0 +1,83 @@
+{% extends "base/base.html" %}
+
+{% block title %}List Tenant{% endblock title %}
+
+{% block main %}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12">
+        <h2 class="mb-2 page-title">All Tenants</h2>
+        
+        <div class="row my-4">
+          <!-- Small table -->
+          <div class="col-md-12">
+            <div class="card shadow">
+              <div class="card-body">
+                <!-- table -->
+                <table class="table datatables" id="dataTable-1">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>#</th>
+                      <th>Schema Name</th>
+                      <th>Domain</th> 
+                      <th>Primary Domain</th> 
+                      <th>On Trial</th>
+                      <th>Created On</th> 
+                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for tenant in tenants %}
+                    <tr>
+                      <td>
+                        <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input">
+                          <label class="custom-control-label"></label>
+                        </div>
+                      </td>
+                      <td>{{ forloop.counter }}</td>
+                      <td>{{tenant.schema_name}}</td>
+                      {% for domain in tenant.domains.all %}
+                            <td><a href="http://{{ domain.domain }}:8000" target="_blank" rel="noopener noreferrer">{{ domain.domain }}</a></td>
+                            
+                            <td>{{ domain.is_primary }}</td>
+                        {% endfor %}
+                        <td>{{tenant.on_trial}}</td>
+                      <td>{{tenant.created_on}}</td>
+                      
+                    </tr>
+                    {% endfor %}
+                    
+                    
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div> <!-- simple table -->
+        </div> <!-- end section -->
+      </div> <!-- .col-12 -->
+    </div> <!-- .row -->
+  </div> <!-- .container-fluid -->
+
+
+  <div class="modal fade modal-full" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <button aria-label="" type="button" class="close px-2" data-dismiss="modal" aria-hidden="true">
+      <span aria-hidden="true">×</span>
+    </button>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body text-center">
+          <p>Are you sure that you want to delete <span id="modalPostName"></span>?</p>
+        <!-- Hidden field to store blogger ID -->
+        <input type="hidden" id="modalPostId">
+          <a class="btn mb-2 btn-outline-danger" href="#" onclick="confirmDelete()">Confirm Delete</a>
+        </div>
+      </div>
+    </div>
+  </div> <!-- small modal -->
+
+
+{% endblock main %}
