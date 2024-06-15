@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from .forms import (ProfileForm, 
                     ServiceForm, 
                     EducationForm, 
@@ -164,22 +164,68 @@ def portfolio_setup(request):
 
 
 def profile_setup_view(request):
+    profile = Profile.objects.first() or None
     if request.method == 'POST':
-        form = ProfileForm(request.POST, request.FILES)
+        if profile:
+            form = ProfileForm(request.POST, request.FILES, instance=profile)
+        else:
+            form = ProfileForm(request.POST, request.FILES)
+        
         if form.is_valid():
             form.save()
-            return redirect('portfolio_setup')
+            return redirect('service_setup')
     else:
-        form = ProfileForm()
+        if profile:
+            form = ProfileForm(instance=profile)
+        else:
+            form = ProfileForm()
     return render(request, 'portfolio/profile-setup.html', {'form': form})
 
+def service_setup_view(request):
+    services = Service.objects.all()
+    form = ServiceForm()
+
+    if request.method == 'POST':
+        form = ServiceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('service_setup')
+        
+    return render(request, 'portfolio/service-setup.html', {'form': form, 'services': services})
+
+
+def delete_service(request, id):
+    service = get_object_or_404(Service, id=id)
+    service.delete()
+    return redirect("service_setup")
+
+def edit_service(request, id):
+    service = get_object_or_404(Service, id=id)
+    
+    if request.method == 'POST':
+        form = ServiceForm(request.POST, instance=service)
+        if form.is_valid():
+            form.save()
+            return redirect('service_setup')
+    else:
+        form = ServiceForm(instance=service)
+    
+    return render(request, 'portfolio/service-setup.html', {'form': form, 'services': Service.objects.all(), 'edit_service': service})
 
 def contact_setup_view(request):
+    contact = Contact.objects.first() or None
     if request.method == 'POST':
-        form = ContactForm(request.POST)
+        if contact:
+            form = ContactForm(request.POST, instance=contact)
+        else:
+            form = ContactForm(request.POST)
+        
         if form.is_valid():
             form.save()
             return redirect('portfolio_setup')
     else:
-        form = ContactForm()
+        if contact:
+            form = ContactForm(instance=contact)
+        else:
+            form = ContactForm()
     return render(request, 'portfolio/contact-setup.html', {'form': form})

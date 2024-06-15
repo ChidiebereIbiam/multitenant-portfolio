@@ -1,0 +1,105 @@
+{% extends "portfolio/setup-base.html" %}
+{% load static %}
+{% block title %}Setup Services{% endblock title %}
+{% block main %}
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Setup Services</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url "portfolio_setup" %}">Services</a></li>
+          <li class="breadcrumb-item">Setup</li>
+
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section profile">
+      <div class="row">
+
+
+        <div class="col-xl-12">
+
+          <div class="card">
+            <div class="card-body pt-3">
+              <!-- Bordered Tabs -->
+              {% include "portfolio/components/tabmenu.html" %}
+              <div class="tab-content pt-2">
+
+                
+
+                <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
+
+                  <!-- Profile Edit Form -->
+                  <form method="post" enctype="multipart/form-data">
+                    {{form.errors}}
+                    {% csrf_token %} 
+
+                    <div class="row mb-3">
+                      <label for="about" class="col-md-4 col-lg-3 col-form-label">Name</label>
+                      <div class="col-md-8 col-lg-9">
+                        {{form.name}}
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="company" class="col-md-4 col-lg-3 col-form-label">Description</label>
+                      <div class="col-md-8 col-lg-9">
+                        {{form.description}}
+                      </div>
+                    </div>
+                   
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-primary">Save Changes</button>
+                      <a class="btn btn-secondary" href="http://">Proceed</a>
+                    </div>
+                  </form><!-- End Profile Edit Form -->
+
+                </div>
+
+              </div><!-- End Bordered Tabs -->
+
+            </div>
+            <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">List of Services</h5>
+                  <!-- Table with stripped rows -->
+                  <table class="table datatable">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for service in services %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{service.name}}</td>
+                            <td>{{service.description}}</td>
+                            <td>
+                                <a class="btn btn-outline-primary" href="{% url 'edit-service' service.id %}">Edit</a>
+                                <a class="btn btn-outline-danger" href="{% url 'delete-service' service.id %}">Delete</a>
+                            </td>
+                            
+                        </tr>
+                      {% endfor %}
+                    
+                    </tbody>
+                  </table>
+                  <!-- End Table with stripped rows -->
+    
+                </div>
+              </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+{% endblock main %}

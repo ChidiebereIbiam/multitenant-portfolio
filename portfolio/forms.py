@@ -32,7 +32,12 @@ class ProfileForm(forms.ModelForm):
 class ServiceForm(forms.ModelForm):
     class Meta:
         model = Service
-        fields = '__all__'
+        fields = ("name", "description")
+
+        widgets = {
+                'name':forms.TextInput(attrs={'class':'form-control'}),
+                'description':forms.TextInput(attrs={'class':'form-control'}),       
+        }
 
 class EducationForm(forms.ModelForm):
     class Meta:

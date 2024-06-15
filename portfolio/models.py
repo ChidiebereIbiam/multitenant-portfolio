@@ -26,6 +26,7 @@ class Profile(models.Model):
 class Service(models.Model):
     name = models.CharField(max_length=150)
     description = models.CharField(max_length=250)
+    #TODO Remove Icon class
     icon_class = models.CharField(max_length=250, null=True, blank=True)
 
     def __str__(self):
