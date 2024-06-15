@@ -1,0 +1,186 @@
+{% extends "portfolio/setup-base.html" %}
+{% load static %}
+{% block title %}Setup Profile{% endblock title %}
+{% block main %}
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Profile</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url "portfolio_setup" %}">Profile</a></li>
+          <li class="breadcrumb-item">Setup</li>
+
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section profile">
+      <div class="row">
+
+
+        <div class="col-xl-12">
+
+          <div class="card">
+            <div class="card-body pt-3">
+              <!-- Bordered Tabs -->
+              <ul class="nav nav-tabs nav-tabs-bordered">
+                
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url "portfolio_setup" %}">Overview</a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url "profile_setup" %}">Setup Profile</a>
+                  
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url "contact_setup" %}">Setup Contact</a>
+                  </li>
+
+
+
+              </ul>
+              <div class="tab-content pt-2">
+
+            
+
+                <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
+
+                  <!-- Profile Edit Form -->
+                  <form method="post" enctype="multipart/form-data">
+                    {{form.errors}}
+                    {% csrf_token %}
+                    <div class="row mb-3">
+                      <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+                      <div class="col-md-8 col-lg-9">
+                        {% comment %} <img src="assets/img/profile-img.jpg" alt="Profile"> {% endcomment %}
+                        <div class="pt-2">
+                         {{form.profile_photo}}
+                         
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">First Name</label>
+                      <div class="col-md-8 col-lg-9">
+                        {{form.first_name}}
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Middle Name</label>
+                        <div class="col-md-8 col-lg-9">
+                          {{form.middle_name}}
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Last Name</label>
+                        <div class="col-md-8 col-lg-9">
+                        {{form.last_name}}
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Location</label>
+                        <div class="col-md-8 col-lg-9">
+                        {{form.location}}
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
+                      <div class="col-md-8 col-lg-9">
+                        {{form.about_me}}
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="company" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                      <div class="col-md-8 col-lg-9">
+                        {{form.email}}
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="Job" class="col-md-4 col-lg-3 col-form-label">Role</label>
+                      <div class="col-md-8 col-lg-9">
+                       {{form.role}}
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">CV</label>
+                        <div class="col-md-8 col-lg-9">
+                          <div class="pt-2">
+                           {{form.cv}}
+                           
+                          </div>
+                        </div>
+                      </div>
+                    <div class="row mb-3">
+                      <label for="Country" class="col-md-4 col-lg-3 col-form-label">Years of Experience</label>
+                      <div class="col-md-8 col-lg-9">
+                        {{form.years_of_experience}}
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="Address" class="col-md-4 col-lg-3 col-form-label">Happy Clients</label>
+                      <div class="col-md-8 col-lg-9">
+                        {{form.happy_clients}}
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Github Profile</label>
+                      <div class="col-md-8 col-lg-9">
+                        {{form.github}}
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
+                      <div class="col-md-8 col-lg-9">
+                        {{form.twitter}}
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Facebook Profile</label>
+                      <div class="col-md-8 col-lg-9">
+                        {{form.facebook}}
+                      </div>
+                    </div>
+
+    
+                    <div class="row mb-3">
+                      <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
+                      <div class="col-md-8 col-lg-9">
+                        {{form.linkedin}}
+                      </div>
+                    </div>
+
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                  </form><!-- End Profile Edit Form -->
+
+                </div>
+
+              </div><!-- End Bordered Tabs -->
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+{% endblock main %}

@@ -1,0 +1,119 @@
+{% extends "portfolio/setup-base.html" %}
+
+{% load static %}
+
+{% block main %}
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Profile</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url "portfolio_setup" %}">Profile</a></li>
+          <li class="breadcrumb-item">Setup</li>
+
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section profile">
+      <div class="row">
+        <div class="col-xl-4">
+
+          <div class="card">
+            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+              <img src="{{profile.profile_photo.url}}" alt="Profile" class="rounded-circle">
+              <h2>{{profile.first_name}} {{profile.middle_name}} {{profile.last_name}}</h2>
+              <h3>{{profile.role}}</h3>
+              <div class="social-links mt-2">
+                <a href="{{profile.twitter}}" class="twitter"><i class="bi bi-twitter"></i></a>
+                <a href="{{profile.facebook}}" class="facebook"><i class="bi bi-facebook"></i></a>
+                <a href="{{profile.github}}" class="instagram"><i class="bi bi-github"></i></a>
+                <a href="{{profile.linkedin}}" class="linkedin"><i class="bi bi-linkedin"></i></a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-xl-8">
+
+          <div class="card">
+            <div class="card-body pt-3">
+              <!-- Bordered Tabs -->
+              <ul class="nav nav-tabs nav-tabs-bordered">
+                
+                
+                <li class="nav-item">
+                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url "profile_setup" %}">Setup Profile</a>
+                  
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url "contact_setup" %}">Setup Contact</a>
+                </li>
+
+
+
+              </ul>
+              <div class="tab-content pt-2">
+
+                <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                  <h5 class="card-title">About</h5>
+                  <p class="small fst-italic">{{profile.about_me}}</p>
+
+                  <h5 class="card-title">Profile Details</h5>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
+                    <div class="col-lg-9 col-md-8">{{profile.first_name}} {{profile.middle_name}} {{profile.last_name}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Role</div>
+                    <div class="col-lg-9 col-md-8">{{profile.role}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Email</div>
+                    <div class="col-lg-9 col-md-8">{{profile.email}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Location</div>
+                    <div class="col-lg-9 col-md-8">{{profile.location}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Experience</div>
+                    <div class="col-lg-9 col-md-8">{{profile.years_of_experience}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Happy Client</div>
+                    <div class="col-lg-9 col-md-8">{{profile.happy_clients}}</div>
+                  </div>
+
+                  
+
+                </div>
+
+                
+              </div><!-- End Bordered Tabs -->
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  {% endblock main %}

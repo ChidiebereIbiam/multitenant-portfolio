@@ -18,7 +18,6 @@ class Profile(models.Model):
     github = models.URLField(max_length=200, null=True, blank=True)
     facebook = models.URLField(max_length=200, null=True, blank=True)
     twitter = models.URLField(max_length=200, null=True, blank=True)
-    google = models.URLField(max_length=200, null=True, blank=True)
     linkedin = models.URLField(max_length=200, null=True, blank=True)
 
     def __str__(self):

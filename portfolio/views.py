@@ -67,15 +67,7 @@ def create_portfolio(request, step='profile'):
     return render(request, 'portfolio/progressive_form.html', {'form': form, 'step': step})
 
 
-def profile_view(request):
-    if request.method == 'POST':
-        form = ProfileForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('service')
-    else:
-        form = ProfileForm()
-    return render(request, 'portfolio/progressive_form.html', {'form': form, 'step': 'profile'})
+
 
 def service_view(request):
     if request.method == 'POST':
@@ -157,3 +149,37 @@ def success_view(request):
 def project_detail(request, id):
     project = Project.objects.get(id = id)
     return render(request, "portfolio/project-detail.html", {"project":project})
+
+
+def portfolio_setup(request):
+    profile = Profile.objects.first() or None
+    if profile:
+        context = {
+                'profile': profile,
+            }
+        return render(request, "portfolio/porfolio-setup.html", context)
+    else:
+        form = ProfileForm()
+        return render(request, 'portfolio/profile-setup.html', {'form': form})
+
+
+def profile_setup_view(request):
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('portfolio_setup')
+    else:
+        form = ProfileForm()
+    return render(request, 'portfolio/profile-setup.html', {'form': form})
+
+
+def contact_setup_view(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('portfolio_setup')
+    else:
+        form = ContactForm()
+    return render(request, 'portfolio/contact-setup.html', {'form': form})
