@@ -109,7 +109,6 @@ class ProjectForm(forms.ModelForm):
 class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
-        
         fields = ("address","phone1","phone2","email")
     
         widgets = {
@@ -124,5 +123,12 @@ class ContactForm(forms.ModelForm):
 class SkillsForm(forms.ModelForm):
     class Meta:
         model = Skills
-        fields = '__all__'
+        fields = ("name","level_of_expertise",)
+        widgets = {
+                'name':forms.TextInput(attrs={'class':'form-control'}),
+                'level_of_expertise':forms.TextInput(attrs={'class':'form-control'}),
+                
+                
+            }
+
         

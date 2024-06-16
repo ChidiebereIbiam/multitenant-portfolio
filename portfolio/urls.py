@@ -23,7 +23,11 @@ urlpatterns = [
     path("project-edit/<int:id>", views.edit_project, name="edit-project"),
 
     path('contact-setup/', views.contact_setup_view, name='contact_setup'),
-    path('skills/', views.skills_view, name='skills_setup'),
+
+    path('skills-setup/', views.skills_setup_view, name='skills_setup'),
+    path("skills-delete/<int:id>", views.delete_skills, name="delete-skills"),
+    path("skills-edit/<int:id>", views.edit_skills, name="edit-skills"),
+
     path("project/<id>", views.project_detail, name="project-detail"),
     path('portfolio-setup/', views.portfolio_setup, name='portfolio_setup'),
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

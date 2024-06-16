@@ -33,20 +33,6 @@ def porfolio(request):
         return render(request, "portfolio/no_portfolio.html")
 
 
-
-def skills_view(request):
-    if request.method == 'POST':
-        form = SkillsForm(request.POST)
-        if form.is_valid():
-            form.save()
-            if 'save_add_another' in request.POST:
-                return redirect('skills')
-            return redirect('success')
-    else:
-        form = SkillsForm()
-    return render(request, 'portfolio/progressive_form.html', {'form': form, 'step': 'skills'})
-
-
 def project_detail(request, id):
     project = Project.objects.get(id = id)
     return render(request, "portfolio/project-detail.html", {"project":project})
@@ -236,10 +222,48 @@ def contact_setup_view(request):
         
         if form.is_valid():
             form.save()
-            return redirect('portfolio_setup')
+            return redirect('skills_setup')
     else:
         if contact:
             form = ContactForm(instance=contact)
         else:
             form = ContactForm()
     return render(request, 'portfolio/contact-setup.html', {'form': form})
+
+
+def skills_setup_view(request):
+    skills = Skills.objects.all()
+    if request.method == 'POST':
+        form = SkillsForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('skills_setup')
+    else:
+        form = SkillsForm()
+    return render(request, 'portfolio/skills-setup.html', {'form': form, 'skills': skills})
+
+
+def delete_skills(request, id):
+    skills = get_object_or_404(Skills, id=id)
+    skills.delete()
+    return redirect("skills_setup")
+
+
+def edit_skills(request, id):
+    skills = get_object_or_404(Skills, id=id)
+    
+    if request.method == 'POST':
+        form = SkillsForm(request.POST, instance=skills)
+        if form.is_valid():
+            form.save()
+            return redirect('skills_setup')
+    else:
+        form = SkillsForm(instance=skills)
+    
+    context = {
+        'form': form, 
+        'skills': Skills.objects.all(), 
+        'edit_skills': skills
+        }
+
+    return render(request, 'portfolio/skills-setup.html', context)
