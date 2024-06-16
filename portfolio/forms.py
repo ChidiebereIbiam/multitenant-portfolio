@@ -42,7 +42,25 @@ class ServiceForm(forms.ModelForm):
 class EducationForm(forms.ModelForm):
     class Meta:
         model = Education
-        fields = '__all__'
+        fields = ("school","degree","field_of_study","start_date","end_date","description")
+
+        widgets = {
+                'school':forms.TextInput(attrs={'class':'form-control'}),
+                'degree':forms.TextInput(attrs={'class':'form-control'}),
+                'field_of_study':forms.TextInput(attrs={'class':'form-control'}),
+                'start_date': forms.widgets.DateInput(
+                    format="%m/%d/%Y",
+                    attrs={
+                        'class':'form-control datetimepicker-input',
+                        'data-target': '#datetimepicker1'}),
+                'end_date': forms.widgets.DateInput(
+                    format="%m/%d/%Y",
+                    attrs={
+                        'class':'form-control datetimepicker-input',
+                        'data-target': '#datetimepicker1'}),
+                'description': forms.Textarea(attrs={'class':'form-control', 'rows':'2'}),       
+        }
+
 
 class WorkExperienceForm(forms.ModelForm):
     class Meta:

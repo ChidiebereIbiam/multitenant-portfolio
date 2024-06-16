@@ -9,8 +9,12 @@ urlpatterns = [
     path('service-setup/', views.service_setup_view, name='service_setup'),
     path("service-delete/<int:id>", views.delete_service, name="delete-service"),
     path("service-edit/<int:id>", views.edit_service, name="edit-service"),
-    path('education/', views.education_view, name='education'),
-    path('work_experience/', views.work_experience_view, name='work_experience'),
+    
+    path('education-setup/', views.education_setup_view, name='education_setup'),
+    path("education-delete/<int:id>", views.delete_education, name="delete-education"),
+    path("education-edit/<int:id>", views.edit_education, name="edit-education"),
+    
+    path('work_experience/', views.work_experience_view, name='work_experience_setup'),
     path('project/', views.project_view, name='project'),
     path('contact-setup/', views.contact_setup_view, name='contact_setup'),
     path('skills/', views.skills_view, name='skills'),

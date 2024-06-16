@@ -39,59 +39,6 @@ def porfolio(request):
 
 
 
-def create_portfolio(request, step='profile'):
-    forms = {
-        'profile': ProfileForm,
-        'service': ServiceForm,
-        'education': EducationForm,
-        'work_experience': WorkExperienceForm,
-        'project': ProjectForm,
-        'contact': ContactForm,
-        'skills': SkillsForm,
-    }
-    
-    if step not in forms:
-        step = 'profile'
-    
-    if request.method == 'POST':
-        form = forms[step](request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            next_step = request.POST.get('next_step')
-            if 'save_add_another' in request.POST:
-                return redirect(f'/create_portfolio/{step}')
-            return redirect(f'/create_portfolio/{next_step}')
-    else:
-        form = forms[step]()
-    
-    return render(request, 'portfolio/progressive_form.html', {'form': form, 'step': step})
-
-
-
-
-def service_view(request):
-    if request.method == 'POST':
-        form = ServiceForm(request.POST)
-        if form.is_valid():
-            form.save()
-            if 'save_add_another' in request.POST:
-                return redirect('service')
-            return redirect('education')
-    else:
-        form = ServiceForm()
-    return render(request, 'portfolio/progressive_form.html', {'form': form, 'step': 'service'})
-
-def education_view(request):
-    if request.method == 'POST':
-        form = EducationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            if 'save_add_another' in request.POST:
-                return redirect('education')
-            return redirect('work_experience')
-    else:
-        form = EducationForm()
-    return render(request, 'portfolio/progressive_form.html', {'form': form, 'step': 'education'})
 
 def work_experience_view(request):
     if request.method == 'POST':
@@ -117,18 +64,6 @@ def project_view(request):
         form = ProjectForm()
     return render(request, 'portfolio/progressive_form.html', {'form': form, 'step': 'project'})
 
-def contact_view(request):
-    if request.method == 'POST':
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            form.save()
-            if 'save_add_another' in request.POST:
-                return redirect('contact')
-            return redirect('skills')
-    else:
-        form = ContactForm()
-    return render(request, 'portfolio/progressive_form.html', {'form': form, 'step': 'contact'})
-
 def skills_view(request):
     if request.method == 'POST':
         form = SkillsForm(request.POST)
@@ -140,10 +75,6 @@ def skills_view(request):
     else:
         form = SkillsForm()
     return render(request, 'portfolio/progressive_form.html', {'form': form, 'step': 'skills'})
-
-def success_view(request):
-    return render(request, 'success.html')
-
 
 
 def project_detail(request, id):
@@ -210,7 +141,47 @@ def edit_service(request, id):
     else:
         form = ServiceForm(instance=service)
     
-    return render(request, 'portfolio/service-setup.html', {'form': form, 'services': Service.objects.all(), 'edit_service': service})
+    context =  {
+        'form': form, 
+        'services': Service.objects.all(), 
+        'edit_service': service
+    }
+    return render(request, 'portfolio/service-setup.html', context)
+
+def education_setup_view(request):
+    educations = Education.objects.all()
+    if request.method == 'POST':
+        form = EducationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('education_setup')
+    else:
+        form = EducationForm()
+    return render(request, 'portfolio/education-setup.html', {'form': form, 'educations': educations})
+
+def delete_education(request, id):
+    education = get_object_or_404(Education, id=id)
+    education.delete()
+    return redirect("education_setup")
+
+def edit_education(request, id):
+    education = get_object_or_404(Education, id=id)
+    
+    if request.method == 'POST':
+        form = EducationForm(request.POST, instance=education)
+        if form.is_valid():
+            form.save()
+            return redirect('education_setup')
+    else:
+        form = EducationForm(instance=education)
+    
+    context = {
+        'form': form, 
+        'educations': Education.objects.all(), 
+        'edit_education': education
+        }
+
+    return render(request, 'portfolio/education-setup.html', context)
 
 def contact_setup_view(request):
     contact = Contact.objects.first() or None
