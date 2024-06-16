@@ -18,9 +18,12 @@ urlpatterns = [
     path("work-experience-delete/<int:id>", views.delete_work_experience, name="delete-work-experience"),
     path("work-experience-edit/<int:id>", views.edit_work_experience, name="edit-work-experience"),
 
-    path('project/', views.project_view, name='project'),
+    path('project-setup/', views.project_setup_view, name='project_setup'),
+    path("project-delete/<int:id>", views.delete_project, name="delete-project"),
+    path("project-edit/<int:id>", views.edit_project, name="edit-project"),
+
     path('contact-setup/', views.contact_setup_view, name='contact_setup'),
-    path('skills/', views.skills_view, name='skills'),
+    path('skills/', views.skills_view, name='skills_setup'),
     path("project/<id>", views.project_detail, name="project-detail"),
     path('portfolio-setup/', views.portfolio_setup, name='portfolio_setup'),
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

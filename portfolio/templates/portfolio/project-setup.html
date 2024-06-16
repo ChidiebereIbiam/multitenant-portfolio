@@ -1,0 +1,176 @@
+{% extends "portfolio/setup-base.html" %}
+{% load static %}
+{% block title %}Setup Projects{% endblock title %}
+{% block main %}
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Setup Projects</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url "portfolio_setup" %}">Projects</a></li>
+          <li class="breadcrumb-item">Setup</li>
+
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section profile">
+      <div class="row">
+
+
+        <div class="col-xl-12">
+
+          <div class="card">
+            <div class="card-body pt-3">
+              <!-- Bordered Tabs -->
+              {% include "portfolio/components/tabmenu.html" %}
+              <div class="tab-content pt-2">
+
+                
+
+                <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
+
+                  <!-- Profile Edit Form -->
+                  <form method="post" enctype="multipart/form-data">
+                    {{form.errors}}
+                    {% csrf_token %} 
+
+                    <div class="row mb-3">
+                      <label for="about" class="col-md-4 col-lg-3 col-form-label">Title</label>
+                      <div class="col-md-8 col-lg-9">
+                        {{form.title}}
+                      </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <label for="company" class="col-md-4 col-lg-3 col-form-label">Project Information</label>
+                        <div class="col-md-8 col-lg-9">
+                          {{form.project_info}}
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="company" class="col-md-4 col-lg-3 col-form-label">Client</label>
+                        <div class="col-md-8 col-lg-9">
+                          {{form.client}}
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="company" class="col-md-4 col-lg-3 col-form-label">Industry</label>
+                        <div class="col-md-8 col-lg-9">
+                          {{form.industry}}
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <label for="company" class="col-md-4 col-lg-3 col-form-label">Technology Used</label>
+                        <div class="col-md-8 col-lg-9">
+                          {{form.technology}}
+                        </div>
+                    </div>
+                    
+
+                    <div class="row mb-3">
+                        <label for="company" class="col-md-4 col-lg-3 col-form-label">Date</label>
+                        <div class="col-md-8 col-lg-9">
+                          {{form.date}}
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="company" class="col-md-4 col-lg-3 col-form-label">Project URL</label>
+                        <div class="col-md-8 col-lg-9">
+                          {{form.url}}
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="company" class="col-md-4 col-lg-3 col-form-label">Image 1</label>
+                      <div class="col-md-8 col-lg-9">
+                        {{form.image1}}
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="company" class="col-md-4 col-lg-3 col-form-label">Image 2</label>
+                        <div class="col-md-8 col-lg-9">
+                          {{form.image2}}
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label for="company" class="col-md-4 col-lg-3 col-form-label">Image 3</label>
+                        <div class="col-md-8 col-lg-9">
+                          {{form.image3}}
+                        </div>
+                      </div>
+                   
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-primary">Save Changes</button>
+                      <a class="btn btn-secondary" href="{% url "contact_setup" %}">Proceed</a>
+                    </div>
+                  </form><!-- End Profile Edit Form -->
+
+                </div>
+
+              </div><!-- End Bordered Tabs -->
+
+            </div>
+            <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">List of Projects</h5>
+                  <!-- Table with stripped rows -->
+                  <table class="table datatable">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Client</th>
+                        <th scope="col">Industry</th>
+                        <th scope="col">Technology</th>
+                        <th scope="col">Date</th>
+                     
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for project in projects %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{project.title}}</td>
+                            <td>{{project.client}}</td>
+                            <td>{{project.industry}}</td>
+                            <td>{{project.technology}}</td>
+                            <td>{{project.date}}</td>
+                           
+                            <td>
+                                <a class="btn btn-outline-primary" href="{% url 'edit-project' project.id %}"><i class="bi bi-pencil-square"> </i></a>
+                                <a class="btn btn-outline-danger" href="{% url 'delete-project' project.id %}"><i class="bi bi-trash-fill"> </i></a>
+                            </td>
+                            
+                        </tr>
+                      {% endfor %}
+                    
+                    </tbody>
+                  </table>
+                  <!-- End Table with stripped rows -->
+    
+                </div>
+              </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+{% endblock main %}
+
+{% block script %}
+<script type='text/javascript'>
+    $('#id_date').attr("type","date");
+ 
+ </script>
+
+{% endblock script %}

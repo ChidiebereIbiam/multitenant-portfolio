@@ -34,18 +34,6 @@ def porfolio(request):
 
 
 
-def project_view(request):
-    if request.method == 'POST':
-        form = ProjectForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            if 'save_add_another' in request.POST:
-                return redirect('project')
-            return redirect('contact')
-    else:
-        form = ProjectForm()
-    return render(request, 'portfolio/progressive_form.html', {'form': form, 'step': 'project'})
-
 def skills_view(request):
     if request.method == 'POST':
         form = SkillsForm(request.POST)
@@ -202,6 +190,41 @@ def edit_work_experience(request, id):
 
     return render(request, 'portfolio/work-experience-setup.html', context)
 
+def project_setup_view(request):
+    projects = Project.objects.all()
+    if request.method == 'POST':
+        form = ProjectForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('project_setup')
+    else:
+        form = ProjectForm()
+    return render(request, 'portfolio/project-setup.html', {'form': form, 'projects': projects})
+
+def delete_project(request, id):
+    project = get_object_or_404(Project, id=id)
+    project.delete()
+    return redirect("project_setup")
+
+
+def edit_project(request, id):
+    project = get_object_or_404(Project, id=id)
+    
+    if request.method == 'POST':
+        form = ProjectForm(request.POST, instance=project)
+        if form.is_valid():
+            form.save()
+            return redirect('project_setup')
+    else:
+        form = ProjectForm(instance=project)
+    
+    context = {
+        'form': form, 
+        'projects': Project.objects.all(), 
+        'edit_project': project
+        }
+
+    return render(request, 'portfolio/project-setup.html', context)
 
 def contact_setup_view(request):
     contact = Contact.objects.first() or None

@@ -87,8 +87,25 @@ class WorkExperienceForm(forms.ModelForm):
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = '__all__'
-
+        fields = ("title","project_info","client","industry","technology","date", "url",
+                  "image1", "image2", "image3")
+        
+        widgets = {
+                'title':forms.TextInput(attrs={'class':'form-control'}),
+                'project_info': forms.Textarea(attrs={'class':'form-control', 'rows':'2'}),  
+                'client':forms.TextInput(attrs={'class':'form-control'}),
+                'industry':forms.TextInput(attrs={'class':'form-control'}),
+                'technology':forms.TextInput(attrs={'class':'form-control'}),
+                'date': forms.widgets.DateInput(
+                    format="%m/%d/%Y",
+                    attrs={
+                        'class':'form-control datetimepicker-input',
+                        'data-target': '#datetimepicker1'}),
+                'url':forms.TextInput(attrs={'class':'form-control'}),
+                'image1':forms.FileInput(attrs={'class':'form-control'}),
+                'image2':forms.FileInput(attrs={'class':'form-control'}), 
+                'image3':forms.FileInput(attrs={'class':'form-control'}),      
+        }
 class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
