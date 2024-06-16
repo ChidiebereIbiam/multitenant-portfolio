@@ -65,7 +65,24 @@ class EducationForm(forms.ModelForm):
 class WorkExperienceForm(forms.ModelForm):
     class Meta:
         model = WorkExperience
-        fields = '__all__'
+        fields = ("title","company_name","start_date","end_date","current_job","description")
+        
+        widgets = {
+                'title':forms.TextInput(attrs={'class':'form-control'}),
+                'company_name':forms.TextInput(attrs={'class':'form-control'}),
+                'start_date': forms.widgets.DateInput(
+                    format="%m/%d/%Y",
+                    attrs={
+                        'class':'form-control datetimepicker-input',
+                        'data-target': '#datetimepicker1'}),
+                'end_date': forms.widgets.DateInput(
+                    format="%m/%d/%Y",
+                    attrs={
+                        'class':'form-control datetimepicker-input',
+                        'data-target': '#datetimepicker1'}),
+                'current_job': forms.CheckboxInput(attrs={'class':'form-check-input'}),
+                'description': forms.Textarea(attrs={'class':'form-control', 'rows':'2'}),       
+        }
 
 class ProjectForm(forms.ModelForm):
     class Meta:

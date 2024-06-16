@@ -14,7 +14,10 @@ urlpatterns = [
     path("education-delete/<int:id>", views.delete_education, name="delete-education"),
     path("education-edit/<int:id>", views.edit_education, name="edit-education"),
     
-    path('work_experience/', views.work_experience_view, name='work_experience_setup'),
+    path('work-experience-setup/', views.work_experience_setup_view, name='work_experience_setup'),
+    path("work-experience-delete/<int:id>", views.delete_work_experience, name="delete-work-experience"),
+    path("work-experience-edit/<int:id>", views.edit_work_experience, name="edit-work-experience"),
+
     path('project/', views.project_view, name='project'),
     path('contact-setup/', views.contact_setup_view, name='contact_setup'),
     path('skills/', views.skills_view, name='skills'),

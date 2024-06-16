@@ -1,11 +1,6 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from .forms import (ProfileForm, 
-                    ServiceForm, 
-                    EducationForm, 
-                    WorkExperienceForm, 
-                    ProjectForm, 
-                    ContactForm, 
-                    SkillsForm)
+from .forms import (ProfileForm, ServiceForm, EducationForm, WorkExperienceForm, 
+                    ProjectForm, ContactForm, SkillsForm)
 from .models import Profile, Service, Education, WorkExperience, Project, Contact, Skills
 
 
@@ -38,19 +33,6 @@ def porfolio(request):
         return render(request, "portfolio/no_portfolio.html")
 
 
-
-
-def work_experience_view(request):
-    if request.method == 'POST':
-        form = WorkExperienceForm(request.POST)
-        if form.is_valid():
-            form.save()
-            if 'save_add_another' in request.POST:
-                return redirect('work_experience')
-            return redirect('project')
-    else:
-        form = WorkExperienceForm()
-    return render(request, 'portfolio/progressive_form.html', {'form': form, 'step': 'work_experience'})
 
 def project_view(request):
     if request.method == 'POST':
@@ -182,6 +164,44 @@ def edit_education(request, id):
         }
 
     return render(request, 'portfolio/education-setup.html', context)
+
+def work_experience_setup_view(request):
+    work_experiences = WorkExperience.objects.all()
+    if request.method == 'POST':
+        form = WorkExperienceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('work_experience_setup')
+    else:
+        form = WorkExperienceForm()
+    return render(request, 'portfolio/work-experience-setup.html', {'form': form, 'work_experiences': work_experiences})
+
+
+def delete_work_experience(request, id):
+    work_experiences = get_object_or_404(WorkExperience, id=id)
+    work_experiences.delete()
+    return redirect("work_experience_setup")
+
+
+def edit_work_experience(request, id):
+    work_experience = get_object_or_404(WorkExperience, id=id)
+    
+    if request.method == 'POST':
+        form = WorkExperienceForm(request.POST, instance=work_experience)
+        if form.is_valid():
+            form.save()
+            return redirect('work_experience_setup')
+    else:
+        form = WorkExperienceForm(instance=work_experience)
+    
+    context = {
+        'form': form, 
+        'work_experiences': WorkExperience.objects.all(), 
+        'edit_work_experience': work_experience
+        }
+
+    return render(request, 'portfolio/work-experience-setup.html', context)
+
 
 def contact_setup_view(request):
     contact = Contact.objects.first() or None
