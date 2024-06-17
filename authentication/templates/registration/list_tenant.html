@@ -40,7 +40,7 @@
                       <td>{{ forloop.counter }}</td>
                       <td>{{tenant.schema_name}}</td>
                       {% for domain in tenant.domains.all %}
-                            <td><a href="http://{{ domain.domain }}:8000" target="_blank" rel="noopener noreferrer">{{ domain.domain }}</a></td>
+                            <td><a href="http://{{ domain.domain }}" target="_blank" rel="noopener noreferrer">{{ domain.domain }}</a></td>
                             
                             <td>{{ domain.is_primary }}</td>
                         {% endfor %}

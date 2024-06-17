@@ -2,10 +2,9 @@ from django.shortcuts import redirect, render,get_object_or_404
 from .forms import SignUpForm, ClientForm
 from django.contrib.auth.models import User
 from tenant.models import Domain, Client
-
-
 from django.contrib.auth import authenticate, login
 from django_tenants.utils import schema_context
+from django.conf import settings
 
 def login_view(request):
     error_message = None
@@ -52,7 +51,7 @@ def create_tenant(request):
             schema_name = form.cleaned_data.get('schema_name')
 
             domain = Domain()
-            domain.domain = f'{schema_name}.localhost'
+            domain.domain = f'{schema_name}.{settings.MY_BASE_URL}'
             domain.tenant = tenant
             domain.is_primary = True
             domain.save()

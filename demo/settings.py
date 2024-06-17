@@ -185,7 +185,8 @@ DATABASE_ROUTERS = (
 )
 
 TENANT_MODEL = "tenant.Client"
-TENANT_DOMAIN_MODEL = "tenant.Domain" 
+TENANT_DOMAIN_MODEL = "tenant.Domain"
+MY_BASE_URL = "edenportfolios.vercel.app"
 
 
 
