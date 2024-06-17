@@ -117,11 +117,11 @@ WSGI_APPLICATION = 'demo.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django_tenants.postgresql_backend',
-        'NAME': 'verceldb',
-        'USER': 'default',
+        'NAME': 'postgres',
+        'USER': 'postgres.wauwfflqvptfjzteakae',
         'PASSWORD': 'JHA1ydspwRe8',
-        'HOST': 'ep-steep-art-a4dzwmqc-pooler.us-east-1.aws.neon.tech',
-        'PORT': '5432',
+        'HOST': 'aws-0-us-east-1.pooler.supabase.com',
+        'PORT': '6543',
     }
 }
 
