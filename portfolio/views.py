@@ -2,6 +2,12 @@ from django.shortcuts import get_object_or_404, render, redirect
 from .forms import (ProfileForm, ServiceForm, EducationForm, WorkExperienceForm, 
                     ProjectForm, ContactForm, SkillsForm)
 from .models import Profile, Service, Education, WorkExperience, Project, Contact, Skills
+from django.contrib.auth.decorators import login_required
+from .permissions import owner_only
+import logging
+from django_tenants.utils import schema_context
+
+logger = logging.getLogger(__name__)
 
 
 def porfolio(request):
@@ -37,14 +43,24 @@ def project_detail(request, id):
     project = Project.objects.get(id = id)
     return render(request, "portfolio/project-detail.html", {"project":project})
 
-
+@login_required
+@owner_only
 def portfolio_setup(request):
-    profile = Profile.objects.first() or None
+    try:
+        subdomain = request.get_host().split('.')[0]
+        with schema_context(subdomain):
+            profile = Profile.objects.first()
+            logger.debug(f"Profile found: {profile}")
+    except Profile.DoesNotExist:
+        profile = None
+        logger.error("Profile does not exist.")
+    except Exception as e:
+        profile = None
+        logger.error(f"An unexpected error occurred: {e}")
+    
     if profile:
-        context = {
-                'profile': profile,
-            }
-        return render(request, "portfolio/porfolio-setup.html", context)
+        context = {'profile': profile}
+        return render(request, "portfolio/portfolio-setup.html", context)
     else:
         form = ProfileForm()
         return render(request, 'portfolio/profile-setup.html', {'form': form})

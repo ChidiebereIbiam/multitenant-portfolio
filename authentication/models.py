@@ -1,3 +1,7 @@
-from django.db import models
+from django.contrib.auth.models import AbstractUser
+from django_tenants.utils import schema_context
 
-# Create your models here.
+class User(AbstractUser):
+    def save(self, *args, **kwargs):
+        with schema_context('public'):
+            super().save(*args, **kwargs)

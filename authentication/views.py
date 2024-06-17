@@ -4,8 +4,27 @@ from django.contrib.auth.models import User
 from tenant.models import Domain, Client
 
 
+from django.contrib.auth import authenticate, login
+from django_tenants.utils import schema_context
 
-
+def login_view(request):
+    error_message = None
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        with schema_context('public'):
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                hostname = request.get_host().split(':')[0]
+                if hostname == 'localhost':
+                    return redirect('home')
+                else:
+                    return redirect('portfolio_setup')
+            else:
+                error_message = 'Invalid username or password'
+    
+    return render(request, 'registration/login.html', {'error': error_message})
 
 # Create your views here.
 def registerpage(request):

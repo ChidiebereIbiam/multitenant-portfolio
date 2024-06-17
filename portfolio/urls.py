@@ -1,7 +1,8 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
+from authentication.views import login_view
 
 urlpatterns = [
     path("", views.porfolio, name="portfolio"),
@@ -30,4 +31,13 @@ urlpatterns = [
 
     path("project/<id>", views.project_detail, name="project-detail"),
     path('portfolio-setup/', views.portfolio_setup, name='portfolio_setup'),
+
+    path('authentication/login/', login_view, name="login"),
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
+
+
+
+
+
+    

@@ -33,18 +33,22 @@ ALLOWED_HOSTS = []
 
 SHARED_APPS = (
     'django_tenants',
-    'tenant',
-    'base',
-    'authentication',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'tenant',
+    'base',
+    'authentication',
 )
 
 TENANT_APPS = (
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.admin',
+    'authentication',
     'portfolio',
 )
 
@@ -59,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'demo.middlewares.PublicSchemaMiddleware',
 ]
 
 ROOT_URLCONF = 'portfolio.urls'
@@ -116,6 +121,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'authentication.authentication.PublicSchemaBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+
+AUTH_USER_MODEL = 'authentication.User'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -148,7 +161,6 @@ DATABASE_ROUTERS = (
 )
 
 TENANT_MODEL = "tenant.Client"
-
 TENANT_DOMAIN_MODEL = "tenant.Domain" 
 
 
