@@ -27,6 +27,7 @@ SECRET_KEY = 'django-insecure-do&$f_rq0^y!a_f7v-gtpgv$ee67*w%28!xsc+mv1#pz2z@4r!
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = ['https://edenportfolios.vercel.app',]
 
 
 # Application definition
